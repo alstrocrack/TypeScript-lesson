@@ -1,11 +1,20 @@
-let appId = 'abc';
-const button = document.querySelector('button');
+class Department {
+  name: string;
 
-function clickHandler(message: string) {
-  // let username = "Max";
-  console.log('Clicked! ' + message)
+  constructor(n: string) {
+    this.name = n;
+  }
+
+  describe(this: Department) {
+    console.log("Department: " + this.name);
+  }
 }
 
-if (button) {
-  button.addEventListener('click', clickHandler.bind(null, 'You'));
-}
+const accountding = new Department('Accounting');
+// console.log(accountding);
+
+accountding.describe();
+
+const accountdingCopy = {name: 'DUMMY', describe: accountding.describe};
+
+accountdingCopy.describe();

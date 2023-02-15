@@ -1,40 +1,40 @@
-// const person: {
-//   name: string;
-//   age: number;
-//   hobbies: string[];
-//   role: [number, string];
-// } = {
+// // const person: {
+// //   name: string;
+// //   age: number;
+// //   hobbies: string[];
+// //   role: [number, string];
+// // } = {
+// //   name: 'yota',
+// //   age: 30,
+// //   hobbies: ['Sports', 'Cooking'],
+// //   role: [2, 'author'],
+// // }
+
+// enum Role {
+//   ADMIN, READ_ONLY, AUTHOR
+// }
+
+// const person = {
 //   name: 'yota',
 //   age: 30,
 //   hobbies: ['Sports', 'Cooking'],
-//   role: [2, 'author'],
+//   role: Role.ADMIN,
 // }
 
-enum Role {
-  ADMIN, READ_ONLY, AUTHOR
-}
+// // person.role.push('admin');
+// // person.role[1] = 10;
 
-const person = {
-  name: 'yota',
-  age: 30,
-  hobbies: ['Sports', 'Cooking'],
-  role: Role.ADMIN,
-}
+// // person.role = [0, 'admin', 'user'];
 
-// person.role.push('admin');
-// person.role[1] = 10;
+// let favoriteActivities: string[];
+// favoriteActivities = ['Sports'];
 
-// person.role = [0, 'admin', 'user'];
+// console.log(person.name);
 
-let favoriteActivities: string[];
-favoriteActivities = ['Sports'];
+// for (const hobby of person.hobbies) {
+//   console.log(hobby.toUpperCase());
+// }
 
-console.log(person.name);
-
-for (const hobby of person.hobbies) {
-  console.log(hobby.toUpperCase());
-}
-
-if (person.role === Role.ADMIN) {
-  console.log("ADMIN USER");
-}
+// if (person.role === Role.ADMIN) {
+//   console.log("ADMIN USER");
+// }
