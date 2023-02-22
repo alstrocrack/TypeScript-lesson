@@ -1,16 +1,19 @@
-class Department {
+abstract class Department {
+  static fiscalYear = 2020;
   // private readonly id :string;
   // name: string;
   protected employees: string[] = [];
 
-  constructor(private readonly id: string, public name: string) {
+  static createEmployee(name: string) {
+    return {name: name};
+  }
+
+  constructor(protected readonly id: string, public name: string) {
     // this.id = id;
     // this.name = n;
   }
 
-  describe(this: Department) {
-    console.log(`Department (${this.id}): ${this.name}`);
-  }
+  abstract describe(this: Department): void;
 
   addEmployee(employee: string) {
     // validations
@@ -30,15 +33,41 @@ class ITDepartment extends Department {
     super(id, "Accounting");
     this.admins = admins;
   }
+
+  describe() {
+    console.log("IT - ID: " + this.id);
+  }
 }
 
 class AccountingDepartment extends Department {
+  private lastReport: string;
+
+  get mostRecentReport() {
+    if (this.lastReport) {
+      return this.lastReport;
+    }
+    throw new Error("not found.")
+  }
+
+  set mostRecentReport(value : string) {
+    if (!value) {
+      throw new Error("invalid")
+    }
+    this.addReport(value);
+  }
+
   constructor(id: string, private reports: string[]) {
     super(id, "IT");
+    this.lastReport = reports[0];
+  }
+
+  describe() {
+    console.log("accounting , ID:" + this.id);
   }
 
   addReport(text: string) {
     this.reports.push(text);
+    this.lastReport = text;
   }
 
   printReports() {
@@ -53,6 +82,9 @@ class AccountingDepartment extends Department {
   }
 }
 
+const employee1 = Department.createEmployee('Max');
+console.log(employee1, Department.fiscalYear);
+
 const it = new ITDepartment('d1', ["Max"]);
 // console.log(it);
 
@@ -65,13 +97,18 @@ it.printEmployeeInformation();
 console.log(it);
 
 const accountding = new AccountingDepartment('d2', []);
+
+
+accountding.mostRecentReport = "accounting REPORT";
 accountding.addReport("something");
-accountding.printReports();
+console.log(accountding.mostRecentReport);
+// accountding.printReports();
 
 accountding.addEmployee('Max');
 accountding.addEmployee('Manu');
 
-accountding.printEmployeeInformation();
+// accountding.printEmployeeInformation();
+accountding.describe();
 // const accountdingCopy = {name: 'DUMMY', describe: accountding.describe};
 
 // accountdingCopy.describe();
