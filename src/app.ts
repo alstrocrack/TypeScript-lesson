@@ -1,115 +1,148 @@
-abstract class Department {
-  static fiscalYear = 2020;
-  // private readonly id :string;
-  // name: string;
-  protected employees: string[] = [];
-
-  static createEmployee(name: string) {
-    return {name: name};
-  }
-
-  constructor(protected readonly id: string, public name: string) {
-    // this.id = id;
-    // this.name = n;
-  }
-
-  abstract describe(this: Department): void;
-
-  addEmployee(employee: string) {
-    // validations
-    // this.id = 'd2';
-    this.employees.push(employee);
-  }
-
-  printEmployeeInformation() {
-    console.log(this.employees.length);
-    console.log(this.employees);
-  }
+type Admin = {
+  name: string;
+  priviledge: string[];
 }
 
-class ITDepartment extends Department {
-  admins: string[];
-  constructor(id: string, admins: string[]) {
-    super(id, "Accounting");
-    this.admins = admins;
-  }
-
-  describe() {
-    console.log("IT - ID: " + this.id);
-  }
+type Employee = {
+  name: string;
+  startDate: Date;
 }
 
-class AccountingDepartment extends Department {
-  private lastReport: string;
+// interface ElevatedEmployee extends Admin, Employee {}
 
-  get mostRecentReport() {
-    if (this.lastReport) {
-      return this.lastReport;
-    }
-    throw new Error("not found.")
-  }
+type ElevatedEmployee = Admin & Employee;
 
-  set mostRecentReport(value : string) {
-    if (!value) {
-      throw new Error("invalid")
-    }
-    this.addReport(value);
-  }
-
-  constructor(id: string, private reports: string[]) {
-    super(id, "IT");
-    this.lastReport = reports[0];
-  }
-
-  describe() {
-    console.log("accounting , ID:" + this.id);
-  }
-
-  addReport(text: string) {
-    this.reports.push(text);
-    this.lastReport = text;
-  }
-
-  printReports() {
-    console.log(this.reports);
-  }
-
-  addEmployee(name: string) {
-    if (name == 'Max') {
-      return;
-    }
-    this.employees.push(name);
-  }
+const e1: ElevatedEmployee = {
+  name: 'Max',
+  priviledge: ['create-server'],
+  startDate: new Date(),
 }
 
-const employee1 = Department.createEmployee('Max');
-console.log(employee1, Department.fiscalYear);
+type Combinable = string | number;
+type Numeric = number | boolean;
 
-const it = new ITDepartment('d1', ["Max"]);
-// console.log(it);
-
-it.addEmployee('Max');
-it.addEmployee('Manu');
-
-it.describe();
-it.printEmployeeInformation();
-
-console.log(it);
-
-const accountding = new AccountingDepartment('d2', []);
+type Universal = Combinable & Numeric;
 
 
-accountding.mostRecentReport = "accounting REPORT";
-accountding.addReport("something");
-console.log(accountding.mostRecentReport);
-// accountding.printReports();
+function add(a: number, b: number): number;
+function add(a: string, b: string): string;
+function add(a: string, b: number): string;
+function add(a: number, b: string): string;
+function add(a: Combinable, b: Combinable) {
+  if (typeof a === 'string' || typeof b == "string") {
+    return a.toString() + b.toString();
+  }
+  return a + b;
+}
 
-accountding.addEmployee('Max');
-accountding.addEmployee('Manu');
+const result = add('Hello', 'TypeScript');
+result.split(' ');
 
-// accountding.printEmployeeInformation();
-accountding.describe();
-// const accountdingCopy = {name: 'DUMMY', describe: accountding.describe};
+const fetchedUserData = {
+  id: 'u1',
+  name: 'user1',
+  job: {
+    title: 'Developer',
+    description: 'TypeScript'
+  },
+}
 
-// accountdingCopy.describe();
+console.log(fetchedUserData?.job?.title);
 
+const userInput = '';
+
+const storedData = userInput ?? 'DEFAULT';
+
+
+
+// type UnknownEmployee = Employee | Admin;
+
+// function printEmployeeInformation(emp: UnknownEmployee) {
+//   console.log(emp.name);
+//   if ('priviledge' in emp) {
+//     console.log("Priviledge: " + emp.priviledge );
+//   }
+//   if ('startDate' in emp) {
+//     console.log("Start Date: " + emp.startDate );
+//   }
+// }
+
+// printEmployeeInformation({name: "Manu", startDate: new Date()});
+
+// class Car {
+//   drive() {
+//     console.log("driving now...");
+//   }
+// }
+
+// class Truck {
+//   drive() {
+//     console.log("driveing Truck now...");
+//   }
+
+//   loadCargo(amount: number) {
+//     console.log("loading load" + amount);
+//   }
+// }
+
+// type Vehicle = Car | Truck;
+
+// const v1 = new Car();
+// const v2 = new Truck();
+
+// function useVehicle(vehicle: Vehicle) {
+//   vehicle.drive();
+//   if(vehicle instanceof Truck) {
+//     vehicle.loadCargo(1000);
+//   }
+// }
+
+// useVehicle(v1);
+// useVehicle(v2);
+
+// interface Bird {
+//   type: 'bird',
+//   flyingSpeed: number;
+// }
+
+// interface Horse {
+//   type: 'horse',
+//   runningSpeed: number;
+// }
+
+// type Animal = Bird | Horse;
+
+// function moveAnimal(animal: Animal) {
+//   // if ("flyingSpeed" in animal) {
+//   //   console.log(animal.flyingSpeed);
+//   // }
+//   let speed;
+//   switch(animal.type) {
+//     case 'bird':
+//       speed = animal.flyingSpeed;
+//       break;
+//     case 'horse':
+//       speed = animal.runningSpeed;
+//       break;
+//   }
+//   console.log('Speed: ' + speed);
+// }
+
+// moveAnimal({type: 'bird', flyingSpeed: 10});
+
+// // const paragraph = document.getElementById('message-output');
+// // const userInputElement = <HTMLInputElement>document.getElementById('user-input')!;
+// const userInputElement = document.getElementById('user-input');
+
+// if(userInputElement) {
+//   (userInputElement as HTMLInputElement).value = "Hello";
+// }
+
+// interface ErrorContainer {
+//   [prop: string]: string
+// }
+
+// const errorBag: ErrorContainer = {
+//   email: 'Invalid Email',
+//   userName: 'Invalid userName',
+// };
