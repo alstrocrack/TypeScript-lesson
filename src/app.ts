@@ -7,6 +7,7 @@ function Logger(logString: string) {
 
 function WithTemplate(template: string, hookId: string) {
   return function(constructor: any) {
+    console.log("templates is displayed");
     const hookEl = document.getElementById(hookId);
     const p = new constructor();
     if(hookEl) {
@@ -16,7 +17,7 @@ function WithTemplate(template: string, hookId: string) {
   }
 }
 
-// @Logger("log is begin displayed - Person")
+@Logger("log is begin displayed - Person")
 @WithTemplate("<h1>Person obj</h1>", "app")
 class Person {
   name = 'Max';
