@@ -24,7 +24,7 @@ function searchAddressHandler(event: Event) {
     if (response.data.status !== 'OK') {
       throw new Error('cannot get coodonates.')
     }
-    const coordinates = response.data.results[0].geometry.location;
+    // const coordinates = response.data.results[0].geometry.location;
   }).catch(err => {
     alert(err.message);
     console.log(err);
